@@ -1,0 +1,221 @@
+.landing {
+  gap: 0;
+  padding-top: 60px;
+  text-align: center;
+}
+
+/* Brand */
+.landing__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 40px;
+}
+
+.landing__club {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.landing__event {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--cherry);
+  text-transform: uppercase;
+}
+
+/* Title */
+.landing__title-block {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.landing__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.landing__title-line {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: 0.04em;
+}
+
+.landing__title-line--higher {
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  color: var(--text-primary);
+  text-shadow:
+    3px 3px 0 var(--maroon-deep),
+    6px 6px 0 rgba(61, 26, 42, 0.5),
+    0 0 30px rgba(196, 30, 58, 0.15);
+}
+
+.landing__title-line--or {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--cherry);
+  letter-spacing: 0.3em;
+  margin: 4px 0;
+  text-shadow: 0 0 20px rgba(196, 30, 58, 0.3);
+}
+
+.landing__title-line--lower {
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  color: var(--text-primary);
+  text-shadow:
+    3px 3px 0 var(--maroon-deep),
+    6px 6px 0 rgba(61, 26, 42, 0.5),
+    0 0 30px rgba(196, 30, 58, 0.15);
+}
+
+.landing__title-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 200px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(196, 30, 58, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Tagline */
+.landing__tagline {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+  font-style: italic;
+}
+
+/* CTA */
+.landing__cta {
+  position: relative;
+  padding: 16px 52px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, var(--cherry) 0%, var(--cherry-dark) 100%);
+  color: var(--text-primary);
+  border: 1px solid rgba(196, 30, 58, 0.4);
+  border-radius: var(--border-radius);
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.landing__cta-text {
+  position: relative;
+  z-index: 2;
+}
+
+.landing__cta-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius);
+  pointer-events: none;
+}
+
+/* Info */
+.landing__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 28px;
+}
+
+.landing__prize {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--cherry);
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(196, 30, 58, 0.2);
+}
+
+.landing__subtext {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* High score */
+.landing__highscore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 24px;
+  background: rgba(240, 230, 216, 0.02);
+  border: 1px solid rgba(240, 230, 216, 0.05);
+  border-radius: var(--border-radius);
+}
+
+.landing__highscore-label {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.landing__highscore-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--text-accent);
+  letter-spacing: 0.02em;
+}
+
+/* Decorative lines */
+.landing__deco-line {
+  position: absolute;
+  width: 1px;
+  height: 120px;
+  background: linear-gradient(180deg, transparent 0%, rgba(196, 30, 58, 0.15) 50%, transparent 100%);
+}
+
+.landing__deco-line--left {
+  left: 10%;
+  top: 30%;
+}
+
+.landing__deco-line--right {
+  right: 10%;
+  top: 40%;
+}
+
+@media (max-width: 640px) {
+  .landing {
+    padding-top: 40px;
+  }
+  .landing__brand {
+    margin-bottom: 24px;
+  }
+  .landing__cta {
+    padding: 14px 40px;
+    font-size: 1rem;
+  }
+  .landing__deco-line {
+    display: none;
+  }
+}

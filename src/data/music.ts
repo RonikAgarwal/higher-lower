@@ -1,0 +1,26 @@
+import { GameItem } from './types';
+
+export const musicData: GameItem[] = [
+  { id: 'mus-1', name: 'The Weeknd', category: 'Music', metric: 'Spotify Monthly Listeners', value: 115000000, displayValue: '115M', color: '#e63355' },
+  { id: 'mus-2', name: 'Taylor Swift', category: 'Music', metric: 'Spotify Monthly Listeners', value: 92000000, displayValue: '92M', color: '#d4758c' },
+  { id: 'mus-3', name: 'Drake', category: 'Music', metric: 'Spotify Monthly Listeners', value: 87000000, displayValue: '87M', color: '#c41e3a' },
+  { id: 'mus-4', name: 'Bad Bunny', category: 'Music', metric: 'Spotify Monthly Listeners', value: 71000000, displayValue: '71M', color: '#a0243d' },
+  { id: 'mus-5', name: 'Post Malone', category: 'Music', metric: 'Spotify Monthly Listeners', value: 65000000, displayValue: '65M', color: '#8b6914' },
+  { id: 'mus-6', name: 'Ariana Grande', category: 'Music', metric: 'Spotify Monthly Listeners', value: 78000000, displayValue: '78M', color: '#d4758c' },
+  { id: 'mus-7', name: 'Ed Sheeran', category: 'Music', metric: 'Spotify Monthly Listeners', value: 82000000, displayValue: '82M', color: '#c44e1e' },
+  { id: 'mus-8', name: 'Billie Eilish', category: 'Music', metric: 'Spotify Monthly Listeners', value: 68000000, displayValue: '68M', color: '#3a8b3d' },
+  { id: 'mus-9', name: 'Dua Lipa', category: 'Music', metric: 'Spotify Monthly Listeners', value: 58000000, displayValue: '58M', color: '#e63355' },
+  { id: 'mus-10', name: 'BTS', category: 'Music', metric: 'Spotify Monthly Listeners', value: 42000000, displayValue: '42M', color: '#9b59b6' },
+  { id: 'mus-11', name: 'Justin Bieber', category: 'Music', metric: 'Spotify Monthly Listeners', value: 71000000, displayValue: '71M', color: '#e6c833' },
+  { id: 'mus-12', name: 'Rihanna', category: 'Music', metric: 'Spotify Monthly Listeners', value: 55000000, displayValue: '55M', color: '#c41e3a' },
+  { id: 'mus-13', name: 'Eminem', category: 'Music', metric: 'Spotify Monthly Listeners', value: 52000000, displayValue: '52M', color: '#555' },
+  { id: 'mus-14', name: 'Kendrick Lamar', category: 'Music', metric: 'Spotify Monthly Listeners', value: 62000000, displayValue: '62M', color: '#c41e3a' },
+  { id: 'mus-15', name: 'SZA', category: 'Music', metric: 'Spotify Monthly Listeners', value: 55000000, displayValue: '55M', color: '#8b4513' },
+  { id: 'mus-16', name: 'Harry Styles', category: 'Music', metric: 'Spotify Monthly Listeners', value: 45000000, displayValue: '45M', color: '#e63355' },
+  { id: 'mus-17', name: 'Kanye West', category: 'Music', metric: 'Spotify Monthly Listeners', value: 58000000, displayValue: '58M', color: '#333' },
+  { id: 'mus-18', name: 'Doja Cat', category: 'Music', metric: 'Spotify Monthly Listeners', value: 48000000, displayValue: '48M', color: '#d4758c' },
+  { id: 'mus-19', name: 'Travis Scott', category: 'Music', metric: 'Spotify Monthly Listeners', value: 52000000, displayValue: '52M', color: '#8b4513' },
+  { id: 'mus-20', name: 'Olivia Rodrigo', category: 'Music', metric: 'Spotify Monthly Listeners', value: 46000000, displayValue: '46M', color: '#9b59b6' },
+  { id: 'mus-21', name: 'Arijit Singh', category: 'Music', metric: 'Spotify Monthly Listeners', value: 85000000, displayValue: '85M', color: '#c41e3a' },
+  { id: 'mus-22', name: 'AP Dhillon', category: 'Music', metric: 'Spotify Monthly Listeners', value: 22000000, displayValue: '22M', color: '#333' },
+];

@@ -1,0 +1,105 @@
+.choice-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.choice-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.choice-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.choice-btn:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+/* Ripple effect */
+.choice-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
+    rgba(255, 255, 255, 0.25) 0%,
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.choice-btn:active::after {
+  opacity: 1;
+  transition: opacity 0s;
+}
+
+/* HIGHER button */
+.choice-btn--higher {
+  background: linear-gradient(135deg, #1a6b3a 0%, #0d4422 100%);
+  color: #a8f0c4;
+  border: 1px solid rgba(45, 210, 132, 0.25);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(45, 210, 132, 0.1);
+}
+
+.choice-btn--higher:hover:not(:disabled) {
+  border-color: rgba(45, 210, 132, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 25px rgba(45, 210, 132, 0.2);
+}
+
+/* LOWER button */
+.choice-btn--lower {
+  background: linear-gradient(135deg, var(--cherry) 0%, var(--cherry-dark) 100%);
+  color: #ffd4dd;
+  border: 1px solid rgba(230, 51, 85, 0.25);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(196, 30, 58, 0.1);
+}
+
+.choice-btn--lower:hover:not(:disabled) {
+  border-color: rgba(230, 51, 85, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 25px rgba(196, 30, 58, 0.2);
+}
+
+.choice-btn__arrow {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.choice-btn__label {
+  line-height: 1;
+}
+
+@media (max-width: 480px) {
+  .choice-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .choice-btn {
+    width: 220px;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+}

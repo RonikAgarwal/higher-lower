@@ -1,0 +1,116 @@
+.result-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.result-overlay__flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.result-overlay__flash--correct {
+  background: radial-gradient(ellipse at center, rgba(45, 210, 132, 0.12) 0%, transparent 70%);
+}
+
+.result-overlay__flash--wrong {
+  background: radial-gradient(ellipse at center, rgba(230, 51, 85, 0.15) 0%, transparent 70%);
+}
+
+.result-overlay--wrong {
+  animation: screen-shake 0.4s ease;
+}
+
+@keyframes screen-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-6px); }
+  30% { transform: translateX(5px); }
+  45% { transform: translateX(-4px); }
+  60% { transform: translateX(3px); }
+  75% { transform: translateX(-2px); }
+}
+
+.result-overlay__badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.result-overlay__icon {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.result-overlay__icon--correct {
+  color: var(--correct);
+  text-shadow: 0 0 20px rgba(45, 210, 132, 0.5);
+}
+
+.result-overlay__icon--wrong {
+  color: var(--wrong);
+  text-shadow: 0 0 20px rgba(230, 51, 85, 0.5);
+}
+
+.result-overlay__text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.result-overlay__text--correct {
+  color: var(--correct);
+  text-shadow: 0 0 15px rgba(45, 210, 132, 0.3);
+}
+
+.result-overlay__text--wrong {
+  color: var(--wrong);
+  text-shadow: 0 0 15px rgba(230, 51, 85, 0.3);
+}
+
+.result-overlay__milestone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+}
+
+.result-overlay__streak-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--cherry-bright);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 15px rgba(230, 51, 85, 0.4);
+}
+
+.result-overlay__streak-msg {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.result-overlay__particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+}
+
+.result-overlay__particle {
+  position: absolute;
+  border-radius: 50%;
+}

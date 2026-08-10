@@ -1,0 +1,50 @@
+.game-screen {
+  padding-top: 70px;
+  gap: 0;
+}
+
+.game-screen__prompt {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.game-screen__arena {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 8px;
+  perspective: 1000px;
+}
+
+.game-screen__float-anchor {
+  position: relative;
+  height: 0;
+  width: 200px;
+}
+
+@media (max-width: 860px) {
+  .game-screen__arena {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .game-screen {
+    padding-top: 60px;
+  }
+  .game-screen__prompt {
+    font-size: 0.7rem;
+    margin-bottom: 16px;
+  }
+  .game-screen__arena {
+    gap: 12px;
+  }
+}
