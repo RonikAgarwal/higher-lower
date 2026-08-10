@@ -109,6 +109,13 @@
   background: rgba(240, 230, 216, 0.08);
 }
 
+.gameover__leaderboard-wrapper {
+  margin-bottom: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .gameover__actions {
   display: flex;
   gap: 12px;

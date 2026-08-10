@@ -5,14 +5,15 @@ import './Leaderboard.css';
 interface LeaderboardProps {
   entries: LeaderboardEntry[];
   highlightScore?: number;
+  maxItems?: number;
 }
 
-export default function Leaderboard({ entries, highlightScore }: LeaderboardProps) {
+export default function Leaderboard({ entries, highlightScore, maxItems = 8 }: LeaderboardProps) {
   return (
     <div className="leaderboard">
       <h3 className="leaderboard__title">TOP SCORES</h3>
       <div className="leaderboard__list">
-        {entries.slice(0, 8).map((entry, i) => {
+        {entries.slice(0, maxItems).map((entry, i) => {
           const isHighlighted = highlightScore !== undefined && entry.score === highlightScore;
           return (
             <motion.div

@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import Leaderboard from '../components/Leaderboard';
+import { useLeaderboard } from '../hooks/useLeaderboard';
 import './GameOver.css';
 
 interface GameOverProps {
@@ -18,6 +20,7 @@ export default function GameOver({
   onPlayAgain,
   onChangeCategory,
 }: GameOverProps) {
+  const { entries } = useLeaderboard(score);
   return (
     <div className="screen gameover">
       {/* Game Over title */}
@@ -87,6 +90,16 @@ export default function GameOver({
           <span className="gameover__stat-label">HIGH SCORE</span>
           <span className="gameover__stat-value">{highScore.toLocaleString()}</span>
         </div>
+      </motion.div>
+
+      {/* Leaderboard */}
+      <motion.div
+        className="gameover__leaderboard-wrapper"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+      >
+        <Leaderboard entries={entries} highlightScore={score} maxItems={4} />
       </motion.div>
 
       {/* Action buttons */}

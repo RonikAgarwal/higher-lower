@@ -8,6 +8,7 @@ interface HeaderProps {
   multiplier?: number;
   soundEnabled: boolean;
   onToggleSound: () => void;
+  onLogoClick?: () => void;
   showScore?: boolean;
   compact?: boolean;
 }
@@ -18,12 +19,17 @@ export default function Header({
   multiplier = 1,
   soundEnabled,
   onToggleSound,
+  onLogoClick,
   showScore = false,
   compact = false,
 }: HeaderProps) {
   return (
     <header className={`header ${compact ? 'header--compact' : ''}`}>
-      <div className="header__brand">
+      <div 
+        className="header__brand" 
+        onClick={onLogoClick} 
+        style={{ cursor: onLogoClick ? 'pointer' : 'default' }}
+      >
         <img src={logoHorizontal} alt="Cherry Network" className="header__logo-img" />
       </div>
 

@@ -1,10 +1,11 @@
 import { useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { GameItem } from '../data/types';
+import { GameItem, Metric } from '../data/types';
 import './GameCard.css';
 
 interface GameCardProps {
   item: GameItem;
+  metric: Metric | null;
   isHidden?: boolean;
   isRevealing?: boolean;
   revealedValue?: string;
@@ -32,11 +33,13 @@ function getInitials(name: string): string {
 
 export default function GameCard({
   item,
+  metric,
   isHidden = false,
   isRevealing = false,
   revealedValue,
   result,
   side,
+  onRevealComplete,
 }: GameCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -112,7 +115,7 @@ export default function GameCard({
       {/* Content */}
       <div className="game-card__content">
         <h3 className="game-card__name">{item.name}</h3>
-        <span className="game-card__metric">{item.metric}</span>
+        {metric && <span className="game-card__metric">{metric.name}</span>}
 
         <div className="game-card__value-container">
           {isHidden && !isRevealing ? (
@@ -140,12 +143,23 @@ export default function GameCard({
                 damping: 20,
                 delay: 0.2,
               }}
+              onAnimationComplete={onRevealComplete}
             >
-              {revealedValue || item.displayValue}
+              {revealedValue || item.display_value}
             </motion.span>
           ) : (
-            <span className="game-card__value">{item.displayValue}</span>
+            <span className="game-card__value">{item.display_value}</span>
           )}
+        </div>
+
+        {/* Data Provenance Metadata */}
+        <div className="game-card__provenance">
+          {item.source.is_estimate && (
+            <span className="game-card__badge game-card__badge--estimate">ESTIMATE</span>
+          )}
+          <span className="game-card__source" title={item.source.name}>
+            Data verified {new Date(item.source.verified_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+          </span>
         </div>
       </div>
 

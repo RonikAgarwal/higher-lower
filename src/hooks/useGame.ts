@@ -1,14 +1,16 @@
 import { useState, useCallback, useRef } from 'react';
-import { GameItem, GamePhase } from '../data/types';
-import { getDataForCategory } from '../data';
-import { buildGameQueue, isAnswerCorrect, calculatePoints, isStreakMilestone } from '../utils/helpers';
+import { GameItem, GamePhase, Metric } from '../data/types';
+import { getStartingQuestion, getPoolForMetric } from '../data';
+import { isAnswerCorrect, calculatePoints, isStreakMilestone, calculateDifficulty } from '../utils/helpers';
 
 interface GameState {
   phase: GamePhase | 'nameEntry';
   category: string;
   playerName: string;
+  metric: Metric | null;
   currentItem: GameItem | null;
   challengerItem: GameItem | null;
+  currentDifficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'VERY_HARD' | null;
   score: number;
   streak: number;
   multiplier: number;
@@ -17,14 +19,17 @@ interface GameState {
   isMilestone: boolean;
   isNewHighScore: boolean;
   bestStreak: number;
+  _pendingChoice?: boolean;
 }
 
 const INITIAL_STATE: GameState = {
   phase: 'landing',
   category: '',
   playerName: '',
+  metric: null,
   currentItem: null,
   challengerItem: null,
+  currentDifficulty: null,
   score: 0,
   streak: 0,
   multiplier: 1,
@@ -44,20 +49,31 @@ export function useGame() {
     };
   });
 
-  const queueRef = useRef<GameItem[]>([]);
-  const queueIndexRef = useRef(0);
-  const usedPairsRef = useRef<Set<string>>(new Set());
+  const usedEntitiesRef = useRef<Set<string>>(new Set());
 
-  const getNextChallenger = useCallback((): GameItem | null => {
-    const queue = queueRef.current;
-    if (queueIndexRef.current >= queue.length) {
-      // Reshuffle when exhausted
-      queueRef.current = buildGameQueue(queue);
-      queueIndexRef.current = 0;
+  const getNextChallenger = useCallback((
+    categoryId: string, 
+    metricName: string, 
+    metricUnit: string,
+    currentRefId: string
+  ): GameItem | null => {
+    const pool = getPoolForMetric(categoryId, metricName, metricUnit);
+    if (!pool.length) return null;
+
+    let available = pool.filter(e => !usedEntitiesRef.current.has(e.id) && e.id !== currentRefId);
+
+    // If pool exhausted, reset but still exclude the current reference
+    if (available.length === 0) {
+      usedEntitiesRef.current.clear();
+      available = pool.filter(e => e.id !== currentRefId);
     }
-    const item = queueRef.current[queueIndexRef.current];
-    queueIndexRef.current++;
-    return item || null;
+
+    if (available.length === 0) return null;
+
+    const randomIndex = Math.floor(Math.random() * available.length);
+    const chosen = available[randomIndex];
+    usedEntitiesRef.current.add(chosen.id);
+    return chosen;
   }, []);
 
   const goToCategory = useCallback(() => {
@@ -65,28 +81,19 @@ export function useGame() {
   }, []);
 
   const selectCategory = useCallback((categoryId: string) => {
-    const data = getDataForCategory(categoryId);
-    const queue = buildGameQueue(data);
-    queueRef.current = queue;
-    queueIndexRef.current = 0;
-    usedPairsRef.current = new Set();
+    const q = getStartingQuestion(categoryId);
+    if (!q) return;
 
-    const first = queue[0];
-    let second = queue[1];
-    // Ensure different items
-    if (second && second.id === first.id && queue.length > 2) {
-      second = queue[2];
-      queueIndexRef.current = 3;
-    } else {
-      queueIndexRef.current = 2;
-    }
+    usedEntitiesRef.current = new Set([q.reference.id, q.challenger.id]);
 
     setState(prev => ({
       ...prev,
       phase: 'nameEntry',
       category: categoryId,
-      currentItem: first,
-      challengerItem: second,
+      metric: q.metric,
+      currentItem: q.reference,
+      challengerItem: q.challenger,
+      currentDifficulty: q.difficulty,
       score: 0,
       streak: 0,
       multiplier: 1,
@@ -112,14 +119,12 @@ export function useGame() {
   const makeChoice = useCallback((choice: 'higher' | 'lower') => {
     setState(prev => {
       if (!prev.currentItem || !prev.challengerItem) return prev;
-
       const correct = isAnswerCorrect(
         prev.currentItem.value,
         prev.challengerItem.value,
         choice
       );
-
-      return { ...prev, phase: 'revealing', _pendingChoice: correct } as any;
+      return { ...prev, phase: 'revealing', _pendingChoice: correct };
     });
   }, []);
 
@@ -166,18 +171,23 @@ export function useGame() {
 
   const advanceToNext = useCallback(() => {
     setState(prev => {
-      const nextChallenger = getNextChallenger();
-      // Ensure we don't compare item against itself
-      let challenger = nextChallenger;
-      if (challenger && prev.challengerItem && challenger.id === prev.challengerItem.id) {
-        challenger = getNextChallenger();
-      }
+      if (!prev.metric || !prev.challengerItem) return prev;
+
+      const nextChallenger = getNextChallenger(
+        prev.category, 
+        prev.metric.name, 
+        prev.metric.unit, 
+        prev.challengerItem.id
+      );
 
       return {
         ...prev,
         phase: 'playing',
-        currentItem: prev.challengerItem,
-        challengerItem: challenger,
+        currentItem: prev.challengerItem, // Old challenger is now the reference
+        challengerItem: nextChallenger,
+        currentDifficulty: nextChallenger 
+          ? calculateDifficulty(prev.challengerItem.value, nextChallenger.value) 
+          : null,
         isMilestone: false,
       };
     });

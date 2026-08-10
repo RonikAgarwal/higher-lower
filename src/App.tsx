@@ -84,6 +84,7 @@ export default function App() {
           multiplier={game.multiplier}
           soundEnabled={sound.enabled}
           onToggleSound={sound.toggle}
+          onLogoClick={game.restart}
           showScore={showScore}
           compact={game.phase === 'countdown'}
         />
@@ -147,6 +148,7 @@ export default function App() {
             <Game
               currentItem={game.currentItem}
               challengerItem={game.challengerItem}
+              metric={game.metric}
               streak={game.streak}
               multiplier={game.multiplier}
               lastPoints={game.lastPoints}

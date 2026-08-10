@@ -135,6 +135,38 @@
   transition: box-shadow 0.4s;
 }
 
+.game-card__provenance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.game-card__provenance:hover {
+  opacity: 1;
+}
+
+.game-card__badge--estimate {
+  font-size: 0.65rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  background-color: rgba(196, 30, 58, 0.2);
+  color: var(--cherry);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(196, 30, 58, 0.4);
+}
+
+.game-card__source {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  cursor: help;
+}
+
 @media (max-width: 768px) {
   .game-card {
     width: 100%;

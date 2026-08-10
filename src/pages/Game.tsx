@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GameItem } from '../data/types';
+import { GameItem, Metric } from '../data/types';
 import { isAnswerCorrect } from '../utils/helpers';
 import GameCard from '../components/GameCard';
 import VSBadge from '../components/VSBadge';
@@ -12,6 +12,7 @@ import './Game.css';
 interface GameProps {
   currentItem: GameItem;
   challengerItem: GameItem;
+  metric: Metric | null;
   streak: number;
   multiplier: number;
   lastPoints: number;
@@ -28,6 +29,7 @@ type InternalPhase = 'idle' | 'revealing' | 'showResult' | 'transitioning';
 export default function Game({
   currentItem,
   challengerItem,
+  metric,
   streak,
   lastPoints,
   isMilestone,
@@ -121,25 +123,42 @@ export default function Game({
       {/* Cards arena */}
       <div className="game-screen__arena">
         <AnimatePresence mode="wait">
-          <GameCard
-            key={`current-${currentItem.id}-${cardKey}`}
-            item={currentItem}
-            side="left"
-            result={null}
-          />
+          <motion.div
+            key={`left-${cardKey}`}
+            className="game-board__card-wrapper"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+          >
+            <GameCard
+              item={currentItem}
+              metric={metric}
+              revealedValue={currentItem.display_value}
+              side="left"
+            />
+          </motion.div>
         </AnimatePresence>
 
-        <VSBadge isActive={internalPhase === 'idle'} />
+        <VSBadge isRevealing={internalPhase !== 'idle'} />
 
         <AnimatePresence mode="wait">
-          <GameCard
-            key={`challenger-${challengerItem.id}-${cardKey}`}
-            item={challengerItem}
-            side="right"
-            isHidden={!isRevealing}
-            isRevealing={isRevealing}
-            result={internalPhase === 'showResult' ? pendingResult : null}
-          />
+          <motion.div
+            key={`right-${cardKey}`}
+            className="game-board__card-wrapper"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+          >
+            <GameCard
+              item={challengerItem}
+              metric={metric}
+              isHidden={true}
+              isRevealing={internalPhase === 'revealing' || internalPhase === 'showResult'}
+              revealedValue={challengerItem.display_value}
+              result={internalPhase === 'showResult' ? pendingResult : null}
+              side="right"
+            />
+          </motion.div>
         </AnimatePresence>
       </div>
 
