@@ -1,4 +1,18 @@
-import type { GameItem } from '../data/types';
+import type { GameItem, Question } from '../data/types';
+
+/**
+ * Calculates difficulty for dynamic entity pairings based on value ratio.
+ */
+export function calculateDifficulty(val1: number, val2: number): Question['difficulty'] {
+  const maxVal = Math.max(val1, val2);
+  const minVal = Math.min(val1, val2) || 1; // avoid division by zero
+  const ratio = maxVal / minVal;
+
+  if (ratio >= 3.0) return 'EASY';
+  if (ratio >= 1.5) return 'MEDIUM';
+  if (ratio >= 1.15) return 'HARD';
+  return 'VERY_HARD';
+}
 
 /**
  * Fisher-Yates shuffle — returns a new shuffled array.

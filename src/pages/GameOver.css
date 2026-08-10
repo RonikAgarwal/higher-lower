@@ -1,7 +1,8 @@
 .gameover {
   gap: 0;
-  padding-top: 80px;
+  padding-top: 140px;
   padding-bottom: 40px;
+  justify-content: flex-start;
   overflow-y: auto;
 }
 

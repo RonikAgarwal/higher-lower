@@ -4,8 +4,9 @@ import { getDataForCategory } from '../data';
 import { buildGameQueue, isAnswerCorrect, calculatePoints, isStreakMilestone } from '../utils/helpers';
 
 interface GameState {
-  phase: GamePhase;
+  phase: GamePhase | 'nameEntry';
   category: string;
+  playerName: string;
   currentItem: GameItem | null;
   challengerItem: GameItem | null;
   score: number;
@@ -21,6 +22,7 @@ interface GameState {
 const INITIAL_STATE: GameState = {
   phase: 'landing',
   category: '',
+  playerName: '',
   currentItem: null,
   challengerItem: null,
   score: 0,
@@ -81,7 +83,7 @@ export function useGame() {
 
     setState(prev => ({
       ...prev,
-      phase: 'countdown',
+      phase: 'nameEntry',
       category: categoryId,
       currentItem: first,
       challengerItem: second,
@@ -92,6 +94,14 @@ export function useGame() {
       isMilestone: false,
       isNewHighScore: false,
       bestStreak: 0,
+    }));
+  }, []);
+
+  const setNameAndStart = useCallback((name: string) => {
+    setState(prev => ({
+      ...prev,
+      playerName: name,
+      phase: 'countdown',
     }));
   }, []);
 
@@ -195,6 +205,7 @@ export function useGame() {
     ...state,
     goToCategory,
     selectCategory,
+    setNameAndStart,
     startPlaying,
     makeChoice,
     resolveReveal,

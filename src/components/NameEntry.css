@@ -1,0 +1,105 @@
+.name-entry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  background: rgba(13, 10, 14, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.name-entry__card {
+  position: relative;
+  background: var(--bg-card);
+  padding: 40px;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid rgba(240, 230, 216, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(196, 30, 58, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.name-entry__glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(196, 30, 58, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.name-entry__title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(196, 30, 58, 0.3);
+}
+
+.name-entry__subtitle {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.name-entry__form {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.name-entry__input {
+  background: rgba(240, 230, 216, 0.03);
+  border: 1px solid rgba(240, 230, 216, 0.15);
+  border-radius: var(--border-radius);
+  padding: 16px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.name-entry__input:focus {
+  border-color: var(--cherry);
+  background: rgba(196, 30, 58, 0.05);
+  box-shadow: 0 0 20px rgba(196, 30, 58, 0.2);
+}
+
+.name-entry__input::placeholder {
+  color: rgba(240, 230, 216, 0.2);
+}
+
+.name-entry__submit {
+  width: 100%;
+  padding: 16px;
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+}
+
+.name-entry__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(240, 230, 216, 0.1);
+  border-color: transparent;
+  color: var(--text-muted);
+}

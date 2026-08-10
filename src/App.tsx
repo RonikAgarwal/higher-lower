@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Countdown from './components/Countdown';
 import Landing from './pages/Landing';
 import CategorySelect from './pages/CategorySelect';
+import NameEntry from './components/NameEntry';
 import Game from './pages/Game';
 import GameOver from './pages/GameOver';
 
@@ -33,6 +34,11 @@ export default function App() {
     game.selectCategory(categoryId);
   }, [sound, game]);
 
+  const handleNameSubmit = useCallback((name: string) => {
+    sound.play('click');
+    game.setNameAndStart(name);
+  }, [sound, game]);
+
   const handleCountdownComplete = useCallback(() => {
     game.startPlaying();
   }, [game]);
@@ -44,8 +50,14 @@ export default function App() {
 
 
   const handleGameOverTransition = useCallback(() => {
+    leaderboard.addEntry({
+      name: game.playerName,
+      score: game.score,
+      streak: game.bestStreak,
+      category: game.category,
+    });
     game.goToGameOver();
-  }, [game]);
+  }, [game, leaderboard]);
 
   const handlePlayAgain = useCallback(() => {
     sound.play('click');
@@ -104,13 +116,19 @@ export default function App() {
       <AnimatePresence mode="wait">
         {game.phase === 'landing' && (
           <motion.div key="landing" {...pageTransition}>
-            <Landing highScore={game.highScore} onPlay={handlePlay} />
+            <Landing highScore={game.highScore} onPlay={handlePlay} leaderboardEntries={leaderboard.entries} />
           </motion.div>
         )}
 
         {game.phase === 'category' && (
           <motion.div key="category" {...pageTransition}>
             <CategorySelect onSelect={handleSelectCategory} />
+          </motion.div>
+        )}
+
+        {game.phase === 'nameEntry' && (
+          <motion.div key="nameEntry" {...pageTransition}>
+            <NameEntry onSubmit={handleNameSubmit} />
           </motion.div>
         )}
 
@@ -149,7 +167,6 @@ export default function App() {
               bestStreak={game.bestStreak}
               highScore={game.highScore}
               isNewHighScore={game.isNewHighScore}
-              leaderboardEntries={leaderboard.entries}
               onPlayAgain={handlePlayAgain}
               onChangeCategory={handleChangeCategory}
             />

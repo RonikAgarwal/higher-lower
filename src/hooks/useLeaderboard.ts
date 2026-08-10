@@ -1,26 +1,17 @@
 import { useState, useCallback, useEffect } from 'react';
 import { LeaderboardEntry } from '../data/types';
 
-const STORAGE_KEY = 'cherry-hl-leaderboard';
+const STORAGE_KEY = 'cherry-hl-leaderboard-v2';
 const MAX_ENTRIES = 10;
 
-const DEFAULT_LEADERBOARD: LeaderboardEntry[] = [
-  { name: 'AARAV', score: 5420, streak: 14, category: 'music', timestamp: Date.now() - 86400000 },
-  { name: 'ANANYA', score: 4870, streak: 12, category: 'movies', timestamp: Date.now() - 172800000 },
-  { name: 'RONIK', score: 4310, streak: 11, category: 'internet', timestamp: Date.now() - 259200000 },
-  { name: 'KUNAL', score: 3920, streak: 10, category: 'gaming', timestamp: Date.now() - 345600000 },
-  { name: 'RIYA', score: 3640, streak: 9, category: 'random', timestamp: Date.now() - 432000000 },
-  { name: 'ARJUN', score: 3100, streak: 8, category: 'music', timestamp: Date.now() - 518400000 },
-  { name: 'PRIYA', score: 2840, streak: 7, category: 'movies', timestamp: Date.now() - 604800000 },
-  { name: 'VIKRAM', score: 2560, streak: 7, category: 'internet', timestamp: Date.now() - 691200000 },
-];
+const DEFAULT_LEADERBOARD: LeaderboardEntry[] = [];
 
 function loadLeaderboard(): LeaderboardEntry[] {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved) as LeaderboardEntry[];
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed)) return parsed;
     }
   } catch {
     // ignore

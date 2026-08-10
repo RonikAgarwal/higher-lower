@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion';
-import { LeaderboardEntry } from '../data/types';
-import Leaderboard from '../components/Leaderboard';
 import './GameOver.css';
 
 interface GameOverProps {
@@ -8,7 +6,6 @@ interface GameOverProps {
   bestStreak: number;
   highScore: number;
   isNewHighScore: boolean;
-  leaderboardEntries: LeaderboardEntry[];
   onPlayAgain: () => void;
   onChangeCategory: () => void;
 }
@@ -18,7 +15,6 @@ export default function GameOver({
   bestStreak,
   highScore,
   isNewHighScore,
-  leaderboardEntries,
   onPlayAgain,
   onChangeCategory,
 }: GameOverProps) {
@@ -129,15 +125,6 @@ export default function GameOver({
         <span className="gameover__prize-cta">WIN PRIZES</span>
       </motion.div>
 
-      {/* Leaderboard */}
-      <motion.div
-        className="gameover__leaderboard"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.1 }}
-      >
-        <Leaderboard entries={leaderboardEntries} highlightScore={score} />
-      </motion.div>
     </div>
   );
 }

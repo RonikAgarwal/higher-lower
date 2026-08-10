@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import logoHorizontal from '../assets/logo-horizontal.png';
 import './Header.css';
 
 interface HeaderProps {
@@ -23,11 +24,7 @@ export default function Header({
   return (
     <header className={`header ${compact ? 'header--compact' : ''}`}>
       <div className="header__brand">
-        <span className="header__logo">C+</span>
-        <div className="header__text">
-          <span className="header__club">CHERRY NETWORK CLUB</span>
-          <span className="header__event">ELYSIAN SPECIAL</span>
-        </div>
+        <img src={logoHorizontal} alt="Cherry Network" className="header__logo-img" />
       </div>
 
       <div className="header__right">
