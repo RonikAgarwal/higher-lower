@@ -105,7 +105,6 @@ export default function Game({
     }
   }, [pendingResult, isMilestone, onAdvanceToNext, onGameOver, playSound]);
 
-  const isRevealing = internalPhase === 'revealing' || internalPhase === 'showResult';
   const isDisabled = internalPhase !== 'idle';
 
   return (
@@ -139,7 +138,7 @@ export default function Game({
           </motion.div>
         </AnimatePresence>
 
-        <VSBadge isRevealing={internalPhase !== 'idle'} />
+        <VSBadge />
 
         <AnimatePresence mode="wait">
           <motion.div

@@ -20,7 +20,7 @@ export default function GameOver({
   onPlayAgain,
   onChangeCategory,
 }: GameOverProps) {
-  const { entries } = useLeaderboard(score);
+  const { entries } = useLeaderboard();
   return (
     <div className="screen gameover">
       {/* Game Over title */}

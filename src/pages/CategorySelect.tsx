@@ -8,11 +8,6 @@ interface CategorySelectProps {
 }
 
 export default function CategorySelect({ onSelect }: CategorySelectProps) {
-  const handleRandom = () => {
-    const randomCat = categories[Math.floor(Math.random() * categories.length)];
-    onSelect(randomCat.id);
-  };
-
   return (
     <div className="screen category-select">
       <motion.div
@@ -44,11 +39,11 @@ export default function CategorySelect({ onSelect }: CategorySelectProps) {
       >
         <motion.button
           className="btn btn-ghost category-select__random"
-          onClick={handleRandom}
+          onClick={() => onSelect('mixed')}
           whileHover={{ scale: 1.04, borderColor: 'rgba(196,30,58,0.5)' }}
           whileTap={{ scale: 0.96 }}
         >
-          🎲 RANDOM CATEGORY
+          🎲 MIXED — ALL CATEGORIES
         </motion.button>
       </motion.div>
 
