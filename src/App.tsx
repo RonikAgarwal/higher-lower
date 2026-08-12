@@ -69,6 +69,16 @@ export default function App() {
     game.goToCategory();
   }, [sound, game]);
 
+  const handleBackToHome = useCallback(() => {
+    sound.play('click');
+    game.restart();
+  }, [sound, game]);
+
+  const handleBackToCategory = useCallback(() => {
+    sound.play('click');
+    game.goToCategory();
+  }, [sound, game]);
+
   // Show header on game-related screens
   const showHeader = ['playing', 'revealing', 'correct', 'wrong', 'gameOver', 'countdown'].includes(game.phase);
   const showScore = ['playing', 'revealing', 'correct', 'wrong'].includes(game.phase);
@@ -123,13 +133,20 @@ export default function App() {
 
         {game.phase === 'category' && (
           <motion.div key="category" {...pageTransition}>
-            <CategorySelect onSelect={handleSelectCategory} />
+            <CategorySelect 
+              onSelect={handleSelectCategory}
+              onBack={handleBackToHome}
+            />
           </motion.div>
         )}
 
         {game.phase === 'nameEntry' && (
           <motion.div key="nameEntry" {...pageTransition}>
-            <NameEntry onSubmit={handleNameSubmit} />
+            <NameEntry 
+              initialName={game.playerName}
+              onSubmit={handleNameSubmit} 
+              onBack={handleBackToCategory}
+            />
           </motion.div>
         )}
 
@@ -171,6 +188,7 @@ export default function App() {
               isNewHighScore={game.isNewHighScore}
               onPlayAgain={handlePlayAgain}
               onChangeCategory={handleChangeCategory}
+              onHome={handleBackToHome}
             />
           </motion.div>
         )}

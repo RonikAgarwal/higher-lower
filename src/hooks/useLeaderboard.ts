@@ -1,47 +1,49 @@
 import { useState, useCallback, useEffect } from 'react';
+import { collection, query, orderBy, limit, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 import { LeaderboardEntry } from '../data/types';
 
-const STORAGE_KEY = 'cherry-hl-leaderboard-v2';
 const MAX_ENTRIES = 10;
 
-const DEFAULT_LEADERBOARD: LeaderboardEntry[] = [];
-
-function loadLeaderboard(): LeaderboardEntry[] {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved) as LeaderboardEntry[];
-      if (Array.isArray(parsed)) return parsed;
-    }
-  } catch {
-    // ignore
-  }
-  return DEFAULT_LEADERBOARD;
-}
-
-function saveLeaderboard(entries: LeaderboardEntry[]) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-  } catch {
-    // ignore
-  }
-}
-
 export function useLeaderboard() {
-  const [entries, setEntries] = useState<LeaderboardEntry[]>(loadLeaderboard);
+  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
 
   useEffect(() => {
-    saveLeaderboard(entries);
-  }, [entries]);
+    const q = query(
+      collection(db, 'leaderboards'),
+      orderBy('score', 'desc'),
+      limit(MAX_ENTRIES)
+    );
 
-  const addEntry = useCallback((entry: Omit<LeaderboardEntry, 'timestamp'>) => {
-    setEntries(prev => {
-      const newEntry: LeaderboardEntry = { ...entry, timestamp: Date.now() };
-      const updated = [...prev, newEntry]
-        .sort((a, b) => b.score - a.score)
-        .slice(0, MAX_ENTRIES);
-      return updated;
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const newEntries: LeaderboardEntry[] = [];
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        newEntries.push({
+          name: data.name,
+          score: data.score,
+          streak: data.streak,
+          category: data.category,
+          timestamp: data.timestamp?.toMillis() || Date.now(),
+        });
+      });
+      setEntries(newEntries);
+    }, (error) => {
+      console.error("Error fetching leaderboard:", error);
     });
+
+    return () => unsubscribe();
+  }, []);
+
+  const addEntry = useCallback(async (entry: Omit<LeaderboardEntry, 'timestamp'>) => {
+    try {
+      await addDoc(collection(db, 'leaderboards'), {
+        ...entry,
+        timestamp: serverTimestamp(),
+      });
+    } catch (error) {
+      console.error("Error adding leaderboard entry:", error);
+    }
   }, []);
 
   const isHighScore = useCallback((score: number): boolean => {

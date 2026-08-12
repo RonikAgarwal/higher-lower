@@ -3,11 +3,13 @@ import { motion } from 'framer-motion';
 import './NameEntry.css';
 
 interface NameEntryProps {
+  initialName?: string;
   onSubmit: (name: string) => void;
+  onBack: () => void;
 }
 
-export default function NameEntry({ onSubmit }: NameEntryProps) {
-  const [name, setName] = useState('');
+export default function NameEntry({ initialName = '', onSubmit, onBack }: NameEntryProps) {
+  const [name, setName] = useState(initialName);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -26,6 +28,14 @@ export default function NameEntry({ onSubmit }: NameEntryProps) {
 
   return (
     <div className="screen name-entry">
+      <button 
+        className="back-button"
+        onClick={onBack}
+        aria-label="Go back"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+
       <motion.div
         className="name-entry__card"
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
